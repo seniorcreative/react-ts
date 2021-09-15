@@ -5,7 +5,9 @@ class Search extends Component {
     
     state = {
         searchValue: '',
-        repos: []
+        repos: [],
+        pageNum: 1,
+        perPage: 10
     };
 
     render() {
@@ -20,7 +22,7 @@ class Search extends Component {
                 </form>
             </div>
             {this.state.repos.length > 0 && (
-                <SearchResults searchResults={this.state.repos} />
+                <SearchResults searchResults={this.state.repos} pageNum={this.state.pageNum} />
             )}
         </div>
     }
@@ -31,18 +33,17 @@ class Search extends Component {
 
     handleSearch = (e: any) => {
         e.preventDefault()
-        this.fetchData(this.state.searchValue);
+        this.fetchData();
     }
 
-    fetchData = (searchInput: any) => {
-        const searchUrl = `https://api.github.com/search/repositories?q=${searchInput}`;
+    fetchData = () => {
+        const searchUrl = `https://api.github.com/search/repositories?q=${this.state.searchValue}&page=${this.state.pageNum}&per_page=${this.state.perPage}`;
         fetch(searchUrl)
             .then(response => {
                 return response.json();
             })
             .then(jsonData => {
                 this.setState({repos: jsonData.items})
-                console.log(this.state)
             });
     };
 }
