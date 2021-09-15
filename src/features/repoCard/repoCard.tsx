@@ -8,7 +8,7 @@ type Props = {
 
 class RepoCard extends Component<Props> {
     render() {
-        return <div className="col-span-3 md:col-span-1 p-6 rounded-xl shadow-lg bg-yellow-100 mb-2">
+        return <div className="col-span-3 md:col-span-1 p-6 rounded-xl shadow-lg bg-yellow-100">
             <div className="flex justify-between">
                 {/* Avatar */}
                 <div className="w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-500 text-xl text-white">

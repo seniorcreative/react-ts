@@ -7,7 +7,7 @@ function App() {
 
   return (
     <Router>
-      <div className="container mt-8 p-8 bg-indigo-100 rounded-2xl border-4">
+      <div className="container mt-4 p-8 bg-indigo-100 rounded-2xl border-4">
         <Switch>
           <Route exact path="/" component={Search} />
         </Switch>
