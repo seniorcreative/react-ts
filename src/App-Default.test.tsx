@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 
-/* TODO: Implement correct test suite
-
 test('renders learn react link', () => {
   const { getByText } = render(
     <Provider store={store}>
@@ -15,5 +13,3 @@ test('renders learn react link', () => {
 
   expect(getByText(/learn/i)).toBeInTheDocument();
 });
-
-*/
