@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import SearchResults from "../searchResults/searchResults";
+import SearchResults from "../../features/searchResults/searchResults";
 
 class Search extends Component {
-    
+
     state = {
         searchValue: '',
         repos: [],
@@ -29,6 +29,9 @@ class Search extends Component {
 
     handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ searchValue: event.target.value });
+        let currentUrlParams = new URLSearchParams(window.location.search);
+        currentUrlParams.set('page_num', this.state.pageNum.toString());
+        this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
     };
 
     handleSearch = (e: any) => {
