@@ -9,15 +9,17 @@ class Search extends Component {
     };
 
     render() {
-        return <div className="grid grid-cols-2 gap-4 items-center mb-6">
-            <h1 className="col-span-3 md:col-span-1">What are you looking for?</h1>
-            <div className="flex justify-between col-span-3 md:col-span-1">
+        return <div className="grid grid-cols-3 gap-4 items-center mb-6">
+            <p className="col-span-1 md:col-span-1 text-2xl font-bold">Git repo search</p>
+            <div className="flex justify-between col-span-2 md:col-span-2">
+                <form className="flex w-full" onSubmit={this.handleSearch}>
                 <input name="text" type="text" className="rounded-xl shadow-md w-3/4 m-1 px-2 py-3" placeholder="Search"
                     onChange={event => this.handleOnChange(event)}
                     value={this.state.searchValue} />
-                <button className="rounded-xl shadow-md bg-blue text-white w-1/4 m-1 px-1 py-3" onClick={this.handleSearch}>Search</button>
+                <button type="submit" className="rounded-xl shadow-md bg-black text-white w-1/4 m-1 px-1 py-3" onClick={this.handleSearch}>Search</button>
+                </form>
             </div>
-            {this.state.repos && (
+            {this.state.repos.length > 0 && (
                 <SearchResults searchResults={this.state.repos} />
             )}
         </div>
@@ -27,7 +29,8 @@ class Search extends Component {
         this.setState({ searchValue: event.target.value });
     };
 
-    handleSearch = () => {
+    handleSearch = (e: any) => {
+        e.preventDefault()
         this.fetchData(this.state.searchValue);
     }
 

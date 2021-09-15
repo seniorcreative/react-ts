@@ -11,12 +11,14 @@ module.exports = {
       padding: '1rem',
     },
     colors: {
-      blue: {
-        light: '#424b78',
-        DEFAULT: '#424b78',
-        dark: '#424b78',
-      },
-      white: colors.white
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      white: colors.white,
+      gray: colors.trueGray,
+      indigo: colors.indigo,
+      red: colors.rose,
+      yellow: colors.amber,
     }
   },
   variants: {
