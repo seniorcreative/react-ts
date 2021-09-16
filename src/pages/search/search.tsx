@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SearchResults from "../../features/searchResults/searchResults";
-import qs from "qs";
 import Pagination from "../../features/pagination/pagination";
 
 interface Props {
@@ -20,20 +19,30 @@ class Search extends Component<Props> {
     };
 
     componentDidMount() {
-        const history: any = this.props.history;
-        const queryParams: any = qs.parse(history.location.search, { ignoreQueryPrefix: true });
-        if (queryParams.q) {
-            this.setState({searchValue: queryParams.q})
-            this.setState({pageNum: queryParams.page_num})
-            this.fetchData(queryParams.q, queryParams.page_num);
+        const currentUrlParams = new URLSearchParams(window.location.search);
+    
+        if (currentUrlParams.get('q')) {
+            this.setState({
+                searchValue: currentUrlParams.get('q'), 
+                pageNum: currentUrlParams.get('page_num')
+            },
+            () => {
+                this.fetchData();
+            }
+            );
         }
     }
 
     componentDidUpdate(prevProps: any) {
-        const queryParams: any = qs.parse(prevProps.history.location.search, {ignoreQueryPrefix: true})
-        if (queryParams.page_num !== this.state.pageNum) {
-            this.setState({pageNum: queryParams.page_num})
-            this.fetchData(queryParams.q, queryParams.page_num);
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        if (currentUrlParams.get('page_num') && currentUrlParams.get('page_num') !== this.state.pageNum.toString()) {
+            this.setState({ 
+                pageNum: Number(currentUrlParams.get('page_num'))
+            },
+            () => {
+                this.fetchData();
+            }
+            )
         }
     }
 
@@ -63,16 +72,19 @@ class Search extends Component<Props> {
 
     handleSearch = (e: any, rehydrate:Boolean = false) => {
         if (e) e.preventDefault();
-        let currentUrlParams = new URLSearchParams(window.location.search);
+        const currentUrlParams = new URLSearchParams(window.location.search);
         currentUrlParams.set('q', this.state.searchValue);
         currentUrlParams.set('page_num', this.state.pageNum.toString());
         if (!rehydrate) this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
-        this.fetchData(this.state.searchValue, this.state.pageNum);
+        this.fetchData();
     }
 
-    fetchData = (s: String, p: Number) => {
-        const searchUrl = `https://api.github.com/search/repositories?q=${s || this.state.searchValue}&page=${p || this.state.pageNum}&per_page=${this.state.perPage}`;
-        fetch(searchUrl, { headers: {} })
+    fetchData = () => {
+        const searchUrl = `https://api.github.com/search/repositories?q=${this.state.searchValue}&page=${this.state.pageNum}&per_page=${this.state.perPage}`;
+        fetch(searchUrl, { headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `token ${process.env.REACT_APP_PERSONAL_TOKEN}`
+        }})
             .then(response => {
                 return response.json();
             })

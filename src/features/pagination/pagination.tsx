@@ -1,7 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Component } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import qs from "qs";
 
 type Props = {
     total_count: Number,
@@ -16,15 +15,17 @@ class Pagination extends Component<Props> {
     }
     
     handleNext = () => {
-        const queryParams: any = qs.parse(window.location.hash.split("#/")[1], {ignoreQueryPrefix: true});
-        this.setState({ currentPage: Math.min((this.state.currentPage + 1), (Number(this.props.total_count) / this.state.perPage))})
-        this.props.history.push(`?q=${queryParams.q}&page_num=${this.state.currentPage}`) 
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const nextPage = Math.min((Number(currentUrlParams.get('page_num')) + 1), (Number(this.props.total_count) / this.state.perPage))
+        this.setState({ currentPage: nextPage})
+        this.props.history.push(`?q=${currentUrlParams.get('q')}&page_num=${nextPage}`) 
     }    
 
     handlePrev = () => {
-        const queryParams: any = qs.parse(window.location.hash.split("#/")[1], {ignoreQueryPrefix: true});
-        this.setState({ currentPage: Math.max(1, (this.state.currentPage - 1))})
-        this.props.history.push(`?q=${queryParams.q}&page_num=${this.state.currentPage}`) 
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const nextPage = Math.max(1, (Number(currentUrlParams.get('page_num')) - 1))
+        this.setState({ currentPage: nextPage})
+        this.props.history.push(`?q=${currentUrlParams.get('q')}&page_num=${nextPage}`) 
     }
 
 

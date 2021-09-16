@@ -11,21 +11,30 @@ class RepoCard extends Component<Props> {
     state = {
         tags: [],
         truncated_desc: String,
-        first_tag: { name: String, tarball_url: String }
+        first_tag: { name: String, tarball_url: String },
     }
     componentDidMount() {
-        // Search for any tags. 
+        // this.setState({tags_url: this.props.searchResult.tags_url})
         if (String(this.props.searchResult.description).length > 100) {
             this.setState({ truncated_desc: `${this.props.searchResult.description.substring(0, 100)}&hellip;` })
         } else {
             this.setState({ truncated_desc: this.props.searchResult.description })
         }
-        fetch(`${this.props.searchResult.tags_url.toString()}?per_page=1`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
+        this.fetchTags()
+    }
+
+    componentDidUpdate(prevProps: any, prevState: any) {
+        if (prevProps.searchResult.tags_url !== this.props.searchResult.tags_url) {
+            this.fetchTags()
+        }
+    }
+
+    fetchTags = () => {
+        // Search for any tags. 
+        fetch(`${this.props.searchResult.tags_url.toString()}?per_page=1`, { headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `token ${process.env.REACT_APP_PERSONAL_TOKEN}`
+        }})
             .then(response => {
                 return response.json();
             })
@@ -34,6 +43,7 @@ class RepoCard extends Component<Props> {
                 this.setState({ first_tag: jsonData[0] })
             })
     }
+
     render() {
         return <div className="col-span-3 md:col-span-1 p-6 rounded-xl shadow-lg bg-yellow-100">
             <div className="flex justify-between">
