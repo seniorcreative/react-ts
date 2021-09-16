@@ -51,13 +51,13 @@ class RepoCard extends Component<Props> {
             </div>
             <div>
                 {/* Truncated description */}
-                <p className="my-2 desc-panel">{this.state.truncated_desc}</p>
+                <p className="my-2 desc-panel">{this.state.truncated_desc.toString()}</p>
                 {/* Main download link */}
                 <a className="block font-bold text-black link-btn" href={this.props.searchResult.html_url.toString()} rel="noreferrer" target="_blank">View Repository</a>
                 {/* Tag and download link if there is one */}
                 {this.state.first_tag && (
                     <a href={this.state.first_tag.tarball_url.toString()} download title="Download the tarball for this tag" rel="noreferrer" target="_blank" className="rounded-md p-3 bg-yellow-300 w-full flex justify-between items-center">
-                        <p className="flex-auto text-sm">Tag <strong>{this.state.first_tag.name}</strong></p>
+                        <p className="flex-auto text-sm">Tag <strong>{this.state.first_tag.name.toString()}</strong></p>
                         <p className="text-indigo flex justify-between text-sm w-1/3">Tarball&nbsp;<ExternalLinkIcon className="h-5 w-5" /></p>
                     </a>
                 )}
