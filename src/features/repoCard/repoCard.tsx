@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { GitRepoT } from "../../@types/GitRepo";
 import { StarIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import './repoCard.css';
@@ -14,18 +14,17 @@ class RepoCard extends Component<Props> {
         first_tag: { name: String, tarball_url: String },
     }
     componentDidMount() {
-        // this.setState({tags_url: this.props.searchResult.tags_url})
         if (String(this.props.searchResult.description).length > 100) {
-            this.setState({ truncated_desc: `${this.props.searchResult.description.substring(0, 100)}&hellip;` })
+            this.setState({ truncated_desc: `${this.props.searchResult.description.substring(0, 100)}&hellip;` });
         } else {
-            this.setState({ truncated_desc: this.props.searchResult.description })
+            this.setState({ truncated_desc: this.props.searchResult.description });
         }
-        this.fetchTags()
+        this.fetchTags();
     }
 
     componentDidUpdate(prevProps: any, prevState: any) {
         if (prevProps.searchResult.tags_url !== this.props.searchResult.tags_url) {
-            this.fetchTags()
+            this.fetchTags();
         }
     }
 
