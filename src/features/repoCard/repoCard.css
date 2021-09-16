@@ -1,0 +1,19 @@
+.desc-panel {
+    text-overflow: ellipsis;
+    min-height: 100px;
+}
+
+.link-btn {
+    text-decoration: underline;
+    margin: 1em 0;
+    background: #333;
+    border-radius: 8px;
+    padding: 8px;
+    color: white;
+    text-align: center;
+    transform: scale(1);
+    transition: all 0.3s ease;
+}
+.link-btn:hover {
+    transform: scale(1.1);
+}

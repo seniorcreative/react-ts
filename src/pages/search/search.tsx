@@ -49,7 +49,7 @@ class Search extends Component<Props> {
 
     fetchData = () => {
         const searchUrl = `https://api.github.com/search/repositories?q=${this.state.searchValue}&page=${this.state.pageNum}&per_page=${this.state.perPage}`;
-        fetch(searchUrl)
+        fetch(searchUrl, { headers: {}})
             .then(response => {
                 return response.json();
             })

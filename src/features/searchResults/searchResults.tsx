@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import RepoCard from "../repoCard/repoCard"
+import { Component } from "react";
+import RepoCard from "../repoCard/repoCard";
 import { GitRepoT } from "../../@types/GitRepo";
 
 type Props = {
