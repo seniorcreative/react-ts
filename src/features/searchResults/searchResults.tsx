@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import RepoCard from "../repoCard/repoCard"
 import { GitRepoT } from "../../@types/GitRepo";
 
-
 type Props = {
     searchResults: Array<GitRepoT>,
     pageNum: Number
@@ -20,4 +19,5 @@ class SearchResults extends Component<Props> {
         </div>
     };
 }
+
 export default SearchResults;

@@ -9,11 +9,12 @@ interface Props {
 
 class Search extends Component<Props> {
 
+    /* TODO: Implement state hydration from window location query params (and call search) */
     state = {
         searchValue: '',
         repos: [],
         pageNum: 1,
-        perPage: 10
+        perPage: 12
     };
 
     render() {
@@ -42,7 +43,6 @@ class Search extends Component<Props> {
         let currentUrlParams = new URLSearchParams(window.location.search);
         currentUrlParams.set('q', this.state.searchValue);
         currentUrlParams.set('page_num', this.state.pageNum.toString());
-        console.log('currentUrlParams', currentUrlParams.toString())
         this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
         this.fetchData();
     }
